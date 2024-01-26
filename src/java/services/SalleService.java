@@ -83,6 +83,7 @@ public class SalleService implements IDao<Salle> {
         } catch (HibernateException ex) {
             if (tx != null) {
                 tx.rollback();
+                
             }
             if (session != null) {
                 session.close();
@@ -104,10 +105,11 @@ public class SalleService implements IDao<Salle> {
         } catch (HibernateException ex) {
             if (tx != null) {
                 tx.rollback();
-            }
-            if (session != null) {
-                session.close();
-            }
+                
+            }  
+        }
+        finally{
+            session.close();
         }
         return salle;
     }

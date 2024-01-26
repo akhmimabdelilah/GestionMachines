@@ -5,28 +5,25 @@
  */
 package controller;
 
-import entities.Machine;
 import entities.Salle;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import services.MachineService;
 import services.SalleService;
 
 /**
  *
  * @author Ismail
  */
-@WebServlet(name = "MachineController", urlPatterns = {"/MachineController"})
-public class MachineController extends HttpServlet {
+@WebServlet(name = "RechercheController", urlPatterns = {"/RechercheController"})
+public class RechercheController extends HttpServlet {
 
-    SalleService ss = new SalleService();
-    MachineService ms = new MachineService();
-    Salle s1 = new Salle("TestWEB");
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,18 +36,12 @@ public class MachineController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if (request.getParameter("op") != null) {
-            if (request.getParameter("op").equals("delete")) {
-                int id = Integer.parseInt(request.getParameter("id"));
-                ms.delete(ms.findById(id));
-            }
-        } else {
-            String ref = request.getParameter("ref");
-            String marque = request.getParameter("marque");
-            double prix = Double.parseDouble(request.getParameter("prix"));
-            ms.create(new Machine(ref, marque, prix, null));
-        }
-        response.sendRedirect("machines.jsp");
+
+//        int salleId = Integer.parseInt(request.getParameter("salleId"));
+        String salleId = request.getParameter("salle_id");
+        request.setAttribute("salle_id", salleId);
+        RequestDispatcher rd = request.getRequestDispatcher("/Recherche.jsp");
+        rd.forward(request, response);
 
     }
 

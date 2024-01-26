@@ -17,4 +17,11 @@ fieldset{
 input{
     border-radius: 5px; 
 }
+select{
+    width: 300px;
+    //height: 100px;
+}
+body {
+    margin-top: 20px;
+}
 

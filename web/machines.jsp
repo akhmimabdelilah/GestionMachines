@@ -11,38 +11,38 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Machines Page</title>
         <link href="css/styles.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-    
+
         <form action="MachineController" method="GET">
             <fieldset>
                 <legend>Informations Machines</legend>                 
                 <table border="0">
-                    
-                        
-                        <tr>
-                            <td>Reference :</td>
-                            <td><input type="text" name="ref" value="" /></td>
-                        </tr>
-                        <tr>
-                            <td>Marque :</td>
-                            <td><input type="text" name="Marque" value="" /></td>
-                        </tr>
-                        <tr>
-                            <td>Prix :</td>
-                            <td><input type="text" name="prix" value="" /></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td><input type="submit" value="Ajouter" /><input type="reset" value="Annuler" /></td>
-                        </tr>
+
+
+                    <tr>
+                        <td>Reference :</td>
+                        <td><input type="text" name="ref" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td>Marque :</td>
+                        <td><input type="text" name="marque" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td>Prix :</td>
+                        <td><input type="text" name="prix" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><input type="submit" value="Ajouter" /><input type="reset" value="Annuler" /></td>
+                    </tr>
                     </tbody>
                 </table>
 
             </fieldset>
-            
+
         </form>
         <fieldset>
             <legend>Liste Machines</legend>
@@ -53,25 +53,30 @@
                         <th>Reference</th>
                         <th>Marque</th>
                         <th>Prix</th>
+                        <th>Salle</th>
                         <th>Modifier</th>
                         <th>Supprimer</th>
                     </tr>
                 </thead>
                 <tbody>
                     <%
-                            MachineService ms = new MachineService();
-                            for(Machine m :ms.findAll()){
-                            
+                        MachineService ms = new MachineService();
+                        for (Machine m : ms.findAll()) {
+
                     %>
                     <tr>
                         <td><%= m.getId()%></td>
                         <td><%= m.getRef()%></td>
                         <td><%= m.getMarque()%></td>
                         <td><%= m.getPrix()%></td>
-                        <td><a href="MachineController">Modifier</a></td>
-                        <td><a href="MachineController?op=delete&id=<%=m.getId()%>">Supprimer</a></td>
+                        <td><%= m.getSalle().getCode()%></td>
+
+                        <td><a href="MachineController">Modify</a></td>
+                        <td><a href="MachineController?op=delete&id=<%=m.getId()%>">Delete</a></td>
                     </tr>
                     <tr>
+                        <td></td>
+                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -81,9 +86,6 @@
                     <% }%>
                 </tbody>
             </table>
-
-                
-            
         </fieldset>
     </body>
 </html>

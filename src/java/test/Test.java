@@ -23,21 +23,31 @@ import util.HibernateUtil;
 public class Test {
 
     public static void main(String[] args) {
-        SalleService ss=new SalleService();
-        MachineService ms=new MachineService();
-        Salle s1=new Salle("TestWEB");
-        ss.create(s1);
-            
-        for(Salle s:ss.findAll()){
-                System.out.println(s);
-            }    
+        SalleService ss = new SalleService();
+        MachineService ms = new MachineService();
+        Salle s1 = new Salle("s1");
+        Salle s2 = new Salle("s2");
+        Salle s3 = new Salle("s3");
+        Salle s4 = new Salle("s4");
+ 
+//        ss.create(s1);
+        ss.create(s2);
+        ss.create(s3);
+        ss.create(s4);
 
-        ms.create(new Machine("WEB1", "TEST", 3000,s1));
-        ms.create(new Machine("WEB2", "TEST", 2000,s1));
-        ms.create(new Machine("WEB3", "TEST", 4000,s1));
-        for(Machine m: ms.findAll()){
-            System.out.println(m);        
-            System.out.println(ms.findById(38));
-    }
+        for (Salle s : ss.findAll()) {
+            System.out.println(s);
+        }
+
+//        ms.create(new Machine("ER44", "HP", 1000, s1));
+        ms.create(new Machine("ER46", "LENOVO", 3000, s2));
+        ms.create(new Machine("ER48", "ASUS", 5000, s3));
+        ms.create(new Machine("ER50", "DELL", 5000, s4));
+
+        for (Machine m : ms.findAll()) {
+            System.out.println(m);
+
+        }
+
     }
 }

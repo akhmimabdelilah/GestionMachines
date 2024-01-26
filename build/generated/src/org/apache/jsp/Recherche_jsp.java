@@ -3,10 +3,12 @@ package org.apache.jsp;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.jsp.*;
+import services.SalleService;
+import entities.Salle;
 import entities.Machine;
 import services.MachineService;
 
-public final class machines_jsp extends org.apache.jasper.runtime.HttpJspBase
+public final class Recherche_jsp extends org.apache.jasper.runtime.HttpJspBase
     implements org.apache.jasper.runtime.JspSourceDependent {
 
   private static final JspFactory _jspxFactory = JspFactory.getDefaultFactory();
@@ -48,39 +50,41 @@ public final class machines_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("\n");
       out.write("\n");
       out.write("\n");
+      out.write("\n");
+      out.write("\n");
       out.write("<!DOCTYPE html>\n");
       out.write("<html>\n");
       out.write("    <head>\n");
       out.write("        <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n");
-      out.write("        <title>Machines Page</title>\n");
+      out.write("        <title>Search Page</title>\n");
       out.write("        <link href=\"css/styles.css\" rel=\"stylesheet\" type=\"text/css\"/>\n");
       out.write("    </head>\n");
       out.write("    <body>\n");
-      out.write("\n");
-      out.write("        <form action=\"MachineController\" method=\"GET\">\n");
+      out.write("        <form action=\"RechercheController\" method=\"POST\">\n");
       out.write("            <fieldset>\n");
-      out.write("                <legend>Informations Machines</legend>                 \n");
-      out.write("                <table border=\"0\">\n");
+      out.write("                <legend>Informations Machine Par Salle</legend>                 \n");
+      out.write("\n");
+      out.write("                <label for=\"salle_id\">Code de Salle :</label>\n");
+      out.write("                <select name=\"salle_id\">\n");
+      out.write("                    ");
+
+                        SalleService cs = new SalleService();
+                        for (Salle c : cs.findAll()) {
+                    
+      out.write("\n");
+      out.write("                    <option  value=\"");
+      out.print( c.getId());
+      out.write('"');
+      out.write('>');
+      out.print( c.getCode());
+      out.write("</option>\n");
+      out.write("                    ");
+ } 
       out.write("\n");
       out.write("\n");
-      out.write("                    <tr>\n");
-      out.write("                        <td>Reference :</td>\n");
-      out.write("                        <td><input type=\"text\" name=\"ref\" value=\"\" /></td>\n");
-      out.write("                    </tr>\n");
-      out.write("                    <tr>\n");
-      out.write("                        <td>Marque :</td>\n");
-      out.write("                        <td><input type=\"text\" name=\"marque\" value=\"\" /></td>\n");
-      out.write("                    </tr>\n");
-      out.write("                    <tr>\n");
-      out.write("                        <td>Prix :</td>\n");
-      out.write("                        <td><input type=\"text\" name=\"prix\" value=\"\" /></td>\n");
-      out.write("                    </tr>\n");
-      out.write("                    <tr>\n");
-      out.write("                        <td></td>\n");
-      out.write("                        <td><input type=\"submit\" value=\"Ajouter\" /><input type=\"reset\" value=\"Annuler\" /></td>\n");
-      out.write("                    </tr>\n");
-      out.write("                    </tbody>\n");
-      out.write("                </table>\n");
+      out.write("                </select>\n");
+      out.write("\n");
+      out.write("                <input type=\"submit\" value=\"Rechercher\" />\n");
       out.write("\n");
       out.write("            </fieldset>\n");
       out.write("\n");
@@ -95,16 +99,27 @@ public final class machines_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("                        <th>Marque</th>\n");
       out.write("                        <th>Prix</th>\n");
       out.write("                        <th>Salle</th>\n");
-      out.write("                        <th>Modifier</th>\n");
-      out.write("                        <th>Supprimer</th>\n");
+      out.write("\n");
       out.write("                    </tr>\n");
       out.write("                </thead>\n");
       out.write("                <tbody>\n");
+      out.write("\n");
       out.write("                    ");
 
                         MachineService ms = new MachineService();
-                        for (Machine m : ms.findAll()) {
+                        System.out.println("Machines");
+                        int id = 0;
+                        System.out.println("Id:" + request.getParameter("salle_id"));
 
+                        if (request.getParameter("salle_id") != null) {
+                            System.out.println("Salles");
+                            id = Integer.parseInt(request.getParameter("salle_id"));
+                            System.out.println(id);
+
+                            for (Machine m : ms.findAll()) {
+                                System.out.println("Machine Id" + m.getId());
+                                System.out.println("Salle Id" + m.getSalle().getId());
+                                if (m.getSalle().getId() == id) {
                     
       out.write("\n");
       out.write("                    <tr>\n");
@@ -123,23 +138,54 @@ public final class machines_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("                        <td>");
       out.print( m.getSalle().getCode());
       out.write("</td>\n");
-      out.write("\n");
-      out.write("                        <td><a href=\"MachineController\">Modify</a></td>\n");
-      out.write("                        <td><a href=\"MachineController?op=delete&id=");
-      out.print(m.getId());
-      out.write("\">Delete</a></td>\n");
-      out.write("                    </tr>\n");
-      out.write("                    <tr>\n");
-      out.write("                        <td></td>\n");
-      out.write("                        <td></td>\n");
-      out.write("                        <td></td>\n");
-      out.write("                        <td></td>\n");
-      out.write("                        <td></td>\n");
-      out.write("                        <td></td>\n");
-      out.write("                        <td></td>\n");
       out.write("                    </tr>\n");
       out.write("                    ");
- }
+}
+                            }
+                        }
+      out.write("\n");
+      out.write("\n");
+      out.write("                    ");
+
+//                        MachineService ms = new MachineService();
+
+                        System.out.println("Machines");
+                        int ID = 1;
+                        System.out.println("Id:" + request.getParameter("salle_id"));
+
+                        if (request.getParameter("salle_id") != null) {
+                            System.out.println("Salles");
+
+                            System.out.println(ID);
+
+                            for (Machine m : ms.findAll()) {
+                                System.out.println("Machine Id" + m.getId());
+                                System.out.println("Salle Id" + m.getSalle().getId());
+                                if (m.getSalle().getId() == ID) {
+                    
+      out.write("\n");
+      out.write("                    <tr>\n");
+      out.write("                        <td>");
+      out.print( m.getId());
+      out.write("</td>\n");
+      out.write("                        <td>");
+      out.print( m.getRef());
+      out.write("</td>\n");
+      out.write("                        <td>");
+      out.print( m.getMarque());
+      out.write("</td>\n");
+      out.write("                        <td>");
+      out.print( m.getPrix());
+      out.write("</td>\n");
+      out.write("                        <td>");
+      out.print( m.getSalle().getCode());
+      out.write("</td>\n");
+      out.write("                    </tr>\n");
+      out.write("                    ");
+}
+                            }
+                        }
+      out.write("\n");
       out.write("\n");
       out.write("                </tbody>\n");
       out.write("            </table>\n");

@@ -5,7 +5,7 @@
  */
 package controller;
 
-import entities.Machine;
+
 import entities.Salle;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,19 +14,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import services.MachineService;
 import services.SalleService;
 
 /**
  *
  * @author Ismail
  */
-@WebServlet(name = "MachineController", urlPatterns = {"/MachineController"})
-public class MachineController extends HttpServlet {
-
-    SalleService ss = new SalleService();
-    MachineService ms = new MachineService();
-    Salle s1 = new Salle("TestWEB");
+@WebServlet(name = "SalleController", urlPatterns = {"/SalleController"})
+public class SalleController extends HttpServlet {
+    SalleService sss=new SalleService();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,20 +35,19 @@ public class MachineController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if (request.getParameter("op") != null) {
-            if (request.getParameter("op").equals("delete")) {
-                int id = Integer.parseInt(request.getParameter("id"));
-                ms.delete(ms.findById(id));
-            }
-        } else {
-            String ref = request.getParameter("ref");
-            String marque = request.getParameter("marque");
-            double prix = Double.parseDouble(request.getParameter("prix"));
-            ms.create(new Machine(ref, marque, prix, null));
+        if(request.getParameter("op")!= null){
+           if(request.getParameter("op").equals("delete")){
+               int id =Integer.parseInt(request.getParameter("id"));
+               System.out.println(sss.delete(sss.findById(id)));
+           }
+       }else{
+       String code =request.getParameter("code");
+       sss.create(new Salle(code));
+       }
+       response.sendRedirect("Salles.jsp");
+        
         }
-        response.sendRedirect("machines.jsp");
-
-    }
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
